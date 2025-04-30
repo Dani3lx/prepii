@@ -154,9 +154,7 @@ const AuthForm = ({ type }: { type: authType }) => {
           </form>
           <div className="w-full flex flex-row justify-center items-center text-sm text-gray-500 gap-1 mt-4">
             <p>
-              {isSignIn
-                ? "Don&apos;t have an account?"
-                : "Already have an account?"}
+              {isSignIn ? "Don't have an account?" : "Already have an account?"}
             </p>
             <Link
               href={isSignIn ? "/sign-up" : "/sign-in"}
