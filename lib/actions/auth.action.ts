@@ -111,3 +111,13 @@ export const isAuthenticated = async (): Promise<boolean> => {
   const user = await getCurrentUser();
   return !!user;
 };
+
+export const clearSessionCookie = async () => {
+  const cookieStore = await cookies();
+
+  const sessionCookie = cookieStore.get("prepii-user-session")?.value;
+
+  if (!sessionCookie) return;
+
+  cookieStore.delete("prepii-user-session");
+};
