@@ -8,6 +8,15 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import FormField from "./FormField";
 import Link from "next/link";
+import { auth } from "@/firebase/client";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { createUser, signIn } from "@/lib/actions/auth.action";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { AuthError } from "firebase/auth";
 
 const authFormSchema = (type: authType) => {
   return z.object({
@@ -29,8 +38,74 @@ const AuthForm = ({ type }: { type: authType }) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  const router = useRouter();
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      if (isSignIn) {
+        const { email, password } = values;
+        const userCredentials = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const idToken = await userCredentials.user.getIdToken();
+
+        if (!idToken) {
+          toast.error("Sign in failed.");
+          return;
+        }
+
+        const res = await signIn({ idToken, email });
+
+        if (!res.success) {
+          toast.error(res.message);
+          return;
+        }
+
+        toast.success(res.message);
+        router.push("/dashboard");
+      } else {
+        const { name, email, password } = values;
+        const userCredentials = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        const res = await createUser({
+          uid: userCredentials.user.uid,
+          name: name!,
+          email: email,
+        });
+
+        if (!res?.success) {
+          toast.error(res?.message);
+          return;
+        }
+
+        toast.success("Account created successfully. Please sign in.");
+        router.push("/sign-in");
+      }
+    } catch (error: unknown) {
+      const err = error as AuthError;
+      let message = "Something went wrong.";
+
+      switch (err.code) {
+        case "auth/user-not-found":
+          message = "No user found with this email.";
+          break;
+        case "auth/invalid-credential":
+          message = "Incorrect email or password.";
+          break;
+        case "auth/email-already-in-use":
+          message = "User already exists. Please use a different email.";
+          break;
+      }
+
+      console.error("Sign-in error:", error);
+      toast.error(message);
+    }
   }
 
   const isSignIn = type == "sign-in";
