@@ -18,13 +18,15 @@ const Navbar = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
     router.push("/sign-in");
   };
   return (
-    <nav className="fixed top-0 left-0 w-screen px-80 py-4 flex flex-row justify-between drop-shadow-2xl border">
-      <Link href="/" className="font-bold text-2xl">
-        Prepii
-      </Link>
-      <Button onClick={handleOnClick}>
-        {isAuthenticated ? "Sign out" : "Sign In"}
-      </Button>
+    <nav className="fixed top-0 left-0 w-screen flex justify-center items-center border bg-white">
+      <div className="py-4 flex flex-row justify-between w-3/5">
+        <Link href="/" className="font-bold text-2xl">
+          Prepii
+        </Link>
+        <Button className="bg-white" variant="outline" onClick={handleOnClick}>
+          {isAuthenticated ? "Sign out" : "Sign In"}
+        </Button>
+      </div>
     </nav>
   );
 };
