@@ -30,14 +30,14 @@ const FormField = <T extends FieldValues>({
             <Textarea
               {...field}
               placeholder={placeholder}
-              className="resize-none min-h-80 alt-background"
+              className="resize-none min-h-80 bg-white"
             />
           ) : (
             <Input
               type={type}
               placeholder={placeholder}
               {...field}
-              className="alt-background"
+              className="bg-white"
             />
           )}
         </FormControl>
