@@ -112,7 +112,7 @@ const AuthForm = ({ type }: { type: authType }) => {
 
   return (
     <div className="flex w-full items-center justify-center mt-80">
-      <div className="w-full max-w-lg p-8 border-gray-200 border rounded-xl">
+      <div className="w-full max-w-lg p-8 border-gray-200 border rounded-xl bg-white">
         <div className="flex flex-col gap-2 mb-6">
           <h1 className="text-2xl font-bold">
             {isSignIn ? "Sign In" : "Create an account"}
