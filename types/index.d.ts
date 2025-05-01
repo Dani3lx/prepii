@@ -1,8 +1,9 @@
 type authType = "sign-in" | "sign-up";
 
-interface ServerResponse {
+interface ServerResponse<T = unknown> {
   success: boolean;
   message: string;
+  context?: T;
 }
 
 interface User {

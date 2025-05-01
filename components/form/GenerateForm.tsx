@@ -7,12 +7,16 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import FormField from "./FormField";
+import { getCurrentUser } from "@/lib/actions/auth.action";
+import { toast } from "sonner";
+import { generateInterview } from "@/lib/actions/interview.action";
+import { useRouter } from "next/navigation";
 
 const generateFormSchema = () => {
   return z.object({
-    role: z.string().optional(),
-    company: z.string().optional(),
-    description: z.string().optional(),
+    role: z.string(),
+    company: z.string(),
+    description: z.string(),
   });
 };
 
@@ -27,8 +31,29 @@ const GenerateForm = () => {
     },
   });
 
+  const router = useRouter();
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const user = await getCurrentUser();
+    const { role, company, description } = values;
+    try {
+      const res = await generateInterview({
+        role: role,
+        company: company,
+        description: description,
+        userid: user!.id,
+      });
+      if (!res.success) {
+        toast.error(res.message);
+        return;
+      }
+      toast.success(res.message);
+
+      router.push(`/interview/${res.context?.interviewId}`);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong, please try again later.");
+    }
   }
 
   return (
