@@ -125,4 +125,8 @@
   .box-border {
     @apply border border-gray-300 rounded-2xl;
   }
+
+  .alt-background {
+    @apply bg-white dark:bg-white/5;
+  }
 }
