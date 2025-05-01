@@ -18,7 +18,7 @@ const page = async () => {
     <div className="flex items-center mt-24 w-3/5">
       <div className="flex flex-col gap-8 w-full">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
+          <div className="flex flex-col gap-3">
             <h1 className="text-4xl font-bold tracking-tight">
               Welcome back, {user?.name}
             </h1>
