@@ -47,3 +47,22 @@ export const generateInterview = async (
     };
   }
 };
+
+export const getInterview = async (id: string): Promise<Interview | null> => {
+  try {
+    const interviewRecord = await db.collection("interviews").doc(id).get();
+    if (!interviewRecord.exists) {
+      return null;
+    }
+
+    const interview = {
+      id: interviewRecord.id,
+      ...interviewRecord.data(),
+    } as Interview;
+
+    return interview;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

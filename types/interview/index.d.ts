@@ -10,3 +10,12 @@ type InterviewContext = {
 };
 
 type InterviewGenerationResponse = ServerResponse<InterviewContext>;
+
+interface Interview {
+  id: string;
+  role: string;
+  company: string;
+  questions: string[];
+  createdAt: string;
+  userId: string;
+}
