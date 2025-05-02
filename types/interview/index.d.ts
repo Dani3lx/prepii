@@ -19,3 +19,8 @@ interface Interview {
   createdAt: string;
   userId: string;
 }
+
+interface AgentProps {
+  user: User;
+  interview: Interview;
+}

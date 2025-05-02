@@ -1,0 +1,159 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
+import { toast } from "sonner";
+import { vapi } from "@/lib/vapi.sdk";
+import { interviewer } from "@/constants";
+import { useRouter } from "next/navigation";
+
+enum CallStatus {
+  INACTIVE = "INACTIVE",
+  CONNECTING = "CONNECTING",
+  ACTIVE = "ACTIVE",
+  FINISHED = "FINISHED",
+}
+
+interface SavedMessage {
+  role: "user" | "system" | "assistant";
+  content: string;
+}
+
+const Agent = ({ user, interview }: AgentProps) => {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
+  const [messages, setMessages] = useState<SavedMessage[]>([]);
+
+  const latestMessage = messages[messages.length - 1]?.content;
+
+  const router = useRouter();
+
+  // Initializes vapi
+  useEffect(() => {
+    console.log(user, interview);
+    const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
+    const onCallEnd = () => setCallStatus(CallStatus.FINISHED);
+
+    const onMessage = (message: Message) => {
+      if (message.type === "transcript" && message.transcriptType === "final") {
+        const newMessage = { role: message.role, content: message.transcript };
+
+        setMessages((prev) => [...prev, newMessage]);
+      }
+    };
+
+    const onSpeechStart = () => setIsSpeaking(true);
+    const onSpeechEnd = () => setIsSpeaking(false);
+
+    const onError = (error: Error) => {
+      console.log("Error:", error);
+      toast.error("Something went wrong during the call");
+    };
+
+    // Initialize vapi by opening listener.
+    vapi.on("call-start", onCallStart);
+    vapi.on("call-end", onCallEnd);
+    vapi.on("message", onMessage);
+    vapi.on("speech-start", onSpeechStart);
+    vapi.on("speech-end", onSpeechEnd);
+    vapi.on("error", onError);
+
+    return () => {
+      // Turns off the listener
+      vapi.off("call-start", onCallStart);
+      vapi.off("call-end", onCallEnd);
+      vapi.off("message", onMessage);
+      vapi.off("speech-start", onSpeechStart);
+      vapi.off("speech-end", onSpeechEnd);
+      vapi.off("error", onError);
+    };
+  }, []);
+
+  // Handles end of call
+  useEffect(() => {
+    if (callStatus === CallStatus.FINISHED) {
+      console.log(messages);
+      router.push(`/interview/${interview.id}/feedback`);
+    }
+  }, [messages, callStatus]);
+
+  const handleCall = async () => {
+    setCallStatus(CallStatus.CONNECTING);
+
+    let formattedQuestions = "";
+
+    if (interview.questions) {
+      formattedQuestions = interview.questions
+        .map((question) => `- ${question}`)
+        .join("\n");
+    }
+
+    await vapi.start(interviewer, {
+      variableValues: {
+        questions: formattedQuestions,
+      },
+    });
+  };
+
+  const handleDisconnect = async () => {
+    setCallStatus(CallStatus.FINISHED);
+    vapi.stop();
+  };
+
+  return (
+    <>
+      {callStatus === CallStatus.INACTIVE ? (
+        <div className="alt-background rounded-xl shadow-sm border p-8 md:p-10 mt-24 w-3/5 flex flex-col justify-center items-center gap-8 h-[66vh]">
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-800">
+            {interview?.role ? interview.role : "Behavioural"} Interview with{" "}
+            {interview?.company ? interview.company : "Lily"}
+          </h1>
+          <div className="flex flex-col gap-4">
+            <Image
+              src="/interviewer.svg"
+              alt="interviewer"
+              width={120}
+              height={120}
+            />
+            <p>Lily is in this call</p>
+          </div>
+
+          <Button className="w-1/3 p-6" onClick={handleCall}>
+            Join Call
+          </Button>
+        </div>
+      ) : (
+        <div className="w-screen h-screen fixed top-0 left-0 bg-black flex flex-col justify-center items-center p-12">
+          <div
+            className={cn(
+              "w-full h-full bg-white/20 flex flex-col justify-center items-center rounded-3xl gap-4",
+              isSpeaking ? "border-5 border-green-500" : ""
+            )}
+          >
+            <Image
+              src="/interviewer.svg"
+              alt="Lily"
+              width={128}
+              height={128}
+              className="object-cover bg-white rounded-full"
+            />
+            <h3 className="text-white">Lily Chen</h3>
+          </div>
+
+          <div className="h-[100px] flex justify-center items-center">
+            <div className="text-white">
+              <p key={latestMessage}>{latestMessage}</p>
+            </div>
+          </div>
+
+          <Button variant={"destructive"} onClick={handleDisconnect}>
+            End Call
+          </Button>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Agent;
