@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
 import { useRouter } from "next/navigation";
+import { generateFeedback } from "@/lib/actions/feedback.action";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -70,11 +71,31 @@ const Agent = ({ user, interview }: AgentProps) => {
     };
   }, []);
 
+  const handleGenerateFeedback = async (messages: SavedMessage[]) => {
+    try {
+      const { success, message } = await generateFeedback({
+        interviewId: interview.id,
+        userId: user.id,
+        transcript: messages,
+      });
+
+      if (success) {
+        toast.success(message);
+        router.push(`/interview/${interview.id}/feedback`);
+      } else {
+        console.log("Error saving feedback");
+        toast.error(message);
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Handles end of call
   useEffect(() => {
     if (callStatus === CallStatus.FINISHED) {
-      console.log(messages);
-      router.push(`/interview/${interview.id}/feedback`);
+      handleGenerateFeedback(messages);
     }
   }, [messages, callStatus]);
 
