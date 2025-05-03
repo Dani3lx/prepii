@@ -4,9 +4,10 @@ import { feedbackPrompt, feedbackSchema } from "@/constants";
 import { db } from "@/firebase/admin";
 import { google } from "@ai-sdk/google";
 import { generateObject } from "ai";
+import { getCurrentUser } from "./auth.action";
 
 export const generateFeedback = async (
-  props: GenerateFeedbackProps
+  props: GenerateFeedbackParams
 ): Promise<ServerResponse> => {
   const { userId, transcript, interviewId } = props;
   try {
@@ -48,3 +49,25 @@ export const generateFeedback = async (
     };
   }
 };
+
+export async function getFeedbackByInterviewId(
+  interviewId: string
+): Promise<Feedback | null> {
+  const user = await getCurrentUser();
+
+  const feedback = await db
+    .collection("feedback")
+    .where("userId", "==", user?.id)
+    .where("interviewId", "==", interviewId)
+    .limit(1)
+    .get();
+
+  if (feedback.empty) return null;
+
+  const feedbackDoc = feedback.docs[0];
+
+  return {
+    id: feedbackDoc.id,
+    ...feedbackDoc.data(),
+  } as Feedback;
+}
