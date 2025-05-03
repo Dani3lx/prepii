@@ -3,6 +3,7 @@
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
 import { db } from "@/firebase/admin";
+import { getCurrentUser } from "./auth.action";
 
 export const generateInterview = async (
   param: GenerateInterviewParams
@@ -48,10 +49,14 @@ export const generateInterview = async (
   }
 };
 
-export const getInterview = async (id: string): Promise<Interview | null> => {
+export const getInterviewById = async (
+  id: string
+): Promise<Interview | null> => {
   try {
+    const user = await getCurrentUser();
     const interviewRecord = await db.collection("interviews").doc(id).get();
-    if (!interviewRecord.exists) {
+
+    if (!interviewRecord.exists || interviewRecord.data()?.userId != user?.id) {
       return null;
     }
 
