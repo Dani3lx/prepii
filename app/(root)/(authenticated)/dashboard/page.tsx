@@ -7,11 +7,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getCurrentUser } from "@/lib/actions/auth.action";
+import { getFeedbacksByUserId } from "@/lib/actions/feedback.action";
 import Link from "next/link";
 import React from "react";
 
 const page = async () => {
   const user = await getCurrentUser();
+  const feedbacks = await getFeedbacksByUserId(user!.id);
+  console.log(feedbacks);
 
   const pastInterviews = false;
   return (

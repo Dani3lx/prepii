@@ -27,7 +27,7 @@ export const generateFeedback = async (
         "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories",
     });
 
-    await db.collection("feedback").add({
+    await db.collection("feedbacks").add({
       interviewId,
       userId,
       overallScore,
@@ -56,7 +56,7 @@ export async function getFeedbackByInterviewId(
   const user = await getCurrentUser();
 
   const feedback = await db
-    .collection("feedback")
+    .collection("feedbacks")
     .where("userId", "==", user?.id)
     .where("interviewId", "==", interviewId)
     .limit(1)
@@ -70,4 +70,23 @@ export async function getFeedbackByInterviewId(
     id: feedbackDoc.id,
     ...feedbackDoc.data(),
   } as Feedback;
+}
+
+export async function getFeedbacksByUserId(
+  userId: string
+): Promise<Feedback[]> {
+  const feedbacks = await db
+    .collection("feedbacks")
+    .where("userId", "==", userId)
+    .orderBy("createdAt", "desc")
+    .get();
+
+  if (feedbacks.empty) {
+    return [];
+  }
+
+  return feedbacks.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as Feedback[];
 }
