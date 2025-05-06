@@ -13,6 +13,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
 export const Columns: ColumnDef<FeedbackSummary>[] = [
   {
@@ -58,12 +59,10 @@ export const Columns: ColumnDef<FeedbackSummary>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() =>
-                  navigator.clipboard.writeText(feedback.interviewId)
-                }
-              >
-                View Feedback
+              <DropdownMenuItem>
+                <Link href={`/interview/${feedback.interviewId}/feedback`}>
+                  View Feedback
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

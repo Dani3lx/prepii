@@ -14,8 +14,10 @@ import React from "react";
 
 const page = async ({ params }: RouteParams) => {
   const { id } = await params;
-  const interview = await getInterviewById(id);
-  const feedback = await getFeedbackByInterviewId(id);
+  const [interview, feedback] = await Promise.all([
+    getInterviewById(id),
+    getFeedbackByInterviewId(id),
+  ]);
   if (!feedback || !interview) redirect("/");
   return (
     <div className="w-3/5 mt-24 flex flex-col gap-8">
