@@ -71,3 +71,22 @@ export const getInterviewById = async (
     return null;
   }
 };
+
+export const getInterviewsByUserId = async (
+  userId: string
+): Promise<Interview[]> => {
+  const interviews = await db
+    .collection("interviews")
+    .where("userId", "==", userId)
+    .orderBy("createdAt", "desc")
+    .get();
+
+  if (interviews.empty) {
+    return [];
+  }
+
+  return interviews.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as Interview[];
+};

@@ -1,3 +1,5 @@
+import { Columns } from "@/components/data-table/Columns";
+import { DataTable } from "@/components/data-table/DataTable";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,16 +9,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getCurrentUser } from "@/lib/actions/auth.action";
-import { getFeedbacksByUserId } from "@/lib/actions/feedback.action";
+import { getFeedbackSummariesByUserId } from "@/lib/actions/feedback.action";
 import Link from "next/link";
 import React from "react";
 
 const page = async () => {
   const user = await getCurrentUser();
-  const feedbacks = await getFeedbacksByUserId(user!.id);
-  console.log(feedbacks);
+  const feedbackSummaries = await getFeedbackSummariesByUserId(user!.id);
 
-  const pastInterviews = false;
   return (
     <div className="flex items-center mt-24 w-3/5">
       <div className="flex flex-col gap-8 w-full">
@@ -45,7 +45,7 @@ const page = async () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {!pastInterviews ? (
+            {!feedbackSummaries ? (
               <div className="rounded-lg border bg-card p-6">
                 <div className="flex flex-col gap-2">
                   <h3 className="text-lg font-semibold">Getting Started</h3>
@@ -57,34 +57,41 @@ const page = async () => {
                 </div>
               </div>
             ) : (
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between">
-                    <CardTitle className="font-medium">Communication</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">60/100</div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between">
-                    <CardTitle className="font-medium">
-                      Problem Solving
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">60/100</div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between">
-                    <CardTitle className="font-medium">Cultural Fit</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">60/100</div>
-                  </CardContent>
-                </Card>
-              </div>
+              <>
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between">
+                      <CardTitle className="font-medium">
+                        Communication
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">60/100</div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between">
+                      <CardTitle className="font-medium">
+                        Problem Solving
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">60/100</div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between">
+                      <CardTitle className="font-medium">
+                        Cultural Fit
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">60/100</div>
+                    </CardContent>
+                  </Card>
+                </div>
+                <DataTable columns={Columns} data={feedbackSummaries} />
+              </>
             )}
           </CardContent>
         </Card>

@@ -90,3 +90,50 @@ export async function getFeedbacksByUserId(
     ...doc.data(),
   })) as Feedback[];
 }
+
+export async function getFeedbackSummariesByUserId(
+  userId: string
+): Promise<FeedbackSummary[]> {
+  const [interviewSnap, feedbackSnap] = await Promise.all([
+    db.collection("interviews").where("userId", "==", userId).get(),
+    db
+      .collection("feedbacks")
+      .where("userId", "==", userId)
+      .orderBy("createdAt", "desc")
+      .get(),
+  ]);
+
+  if (interviewSnap.empty || feedbackSnap.empty) return [];
+
+  const interviews = interviewSnap.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as Interview[];
+
+  const feedbacks = feedbackSnap.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as Feedback[];
+
+  const interviewMap = new Map<string, Interview>();
+  interviews.forEach((interview) => interviewMap.set(interview.id, interview));
+
+  const feedbackSummaries: FeedbackSummary[] = feedbacks
+    .map((feedback) => {
+      const interview = interviewMap.get(feedback.interviewId);
+      if (!interview) return null;
+
+      return {
+        id: feedback.id,
+        interviewId: interview.id,
+        overallScore: feedback.overallScore,
+        categoryScores: feedback.categoryScores,
+        role: interview.role,
+        company: interview.company,
+        createdAt: feedback.createdAt,
+      } as FeedbackSummary;
+    })
+    .filter(Boolean) as FeedbackSummary[];
+
+  return feedbackSummaries;
+}

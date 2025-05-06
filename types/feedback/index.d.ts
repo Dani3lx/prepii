@@ -17,3 +17,17 @@ interface Feedback {
   areasForImprovement: string[];
   createdAt: string;
 }
+
+interface FeedbackSummary {
+  id: string;
+  interviewId: string;
+  overallScore: number;
+  categoryScores: Array<{
+    name: string;
+    score: number;
+    comment: string;
+  }>;
+  role: string;
+  company: string;
+  createdAt: string;
+}
