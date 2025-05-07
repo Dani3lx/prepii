@@ -53,7 +53,9 @@ export function DataChart({ data }: { data: FeedbackSummary[] }) {
     <Card>
       <CardHeader>
         <CardTitle>Progress Overtime</CardTitle>
-        <CardDescription>Last {data.length} attempts</CardDescription>
+        <CardDescription>
+          Scores for the last {data.length} attempts
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="min-h-[200px]">
