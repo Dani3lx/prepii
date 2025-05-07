@@ -137,3 +137,21 @@ export async function getFeedbackSummariesByUserId(
 
   return feedbackSummaries;
 }
+
+export const processFeedbackScores = async (
+  feedbackSummaries: FeedbackSummary[]
+): Promise<FeedbackScore[]> => {
+  const scores: FeedbackScore[] = [];
+  feedbackSummaries.map((feedbackSummary, index) => {
+    const feedbackScore: FeedbackScore = {
+      attempt: `${index + 1}`,
+      communication: feedbackSummary.categoryScores[0].score,
+      problemSolving: feedbackSummary.categoryScores[1].score,
+      culturalFit: feedbackSummary.categoryScores[2].score,
+      clarity: feedbackSummary.categoryScores[3].score,
+    };
+    scores.push(feedbackScore);
+  });
+
+  return scores;
+};

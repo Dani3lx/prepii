@@ -37,24 +37,13 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function DataChart({ data }: { data: FeedbackSummary[] }) {
-  const chartData: FeedbackScore[] = [];
-  data.map((feedbackSummary, index) => {
-    const feedbackScore: FeedbackScore = {
-      attempt: `${index + 1}`,
-      communication: feedbackSummary.categoryScores[0].score,
-      problemSolving: feedbackSummary.categoryScores[1].score,
-      culturalFit: feedbackSummary.categoryScores[2].score,
-      clarity: feedbackSummary.categoryScores[3].score,
-    };
-    chartData.push(feedbackScore);
-  });
+export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
   return (
     <Card>
       <CardHeader>
         <CardTitle>Progress Overtime</CardTitle>
         <CardDescription>
-          Scores for the last {data.length} attempts
+          Scores for the last {chartData?.length} attempts
         </CardDescription>
       </CardHeader>
       <CardContent>
