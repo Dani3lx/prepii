@@ -47,7 +47,10 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-[200px]">
+        <ChartContainer
+          config={chartConfig}
+          className="min-h-[200px] max-h-[400px] w-full"
+        >
           <LineChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis hide dataKey="attempt" tickLine={false} axisLine={false} />
@@ -57,7 +60,6 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
               axisLine={false}
               tickMargin={8}
               tickFormatter={(value) => `${value}`}
-              domain={[0, 100]}
               className="-translate-x-4"
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />

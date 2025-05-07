@@ -63,7 +63,7 @@ const page = async () => {
   ];
 
   return (
-    <div className="flex items-center mt-24 w-3/5">
+    <div className="flex items-center my-24 w-3/5">
       <div className="flex flex-col gap-8 w-full">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div className="flex flex-col gap-3">
@@ -116,9 +116,19 @@ const page = async () => {
                   ))}
                 </div>
                 <DataChart chartData={feedbackScores} />
-                <DataTable columns={Columns} data={feedbackSummaries} />
               </>
             )}
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl">Past attempts</CardTitle>
+            <CardDescription>
+              Keep track of your previous interview attempts
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <DataTable columns={Columns} data={feedbackSummaries} />
           </CardContent>
         </Card>
       </div>
