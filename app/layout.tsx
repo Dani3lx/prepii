@@ -24,7 +24,7 @@ export default async function RootLayout({
   const isUserAuthenticated = await isAuthenticated();
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.className} antialiased overflow-x-hidden`}>
         <Navbar isAuthenticated={isUserAuthenticated} />
         <main className="mt-18 w-screen flex justify-center">{children}</main>
         <Toaster />

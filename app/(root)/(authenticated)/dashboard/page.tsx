@@ -1,5 +1,6 @@
 import { Columns } from "@/components/data-table/Columns";
 import { DataTable } from "@/components/data-table/DataTable";
+import { DataChart } from "@/components/DataChart";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -90,6 +91,7 @@ const page = async () => {
                     </CardContent>
                   </Card>
                 </div>
+                <DataChart data={feedbackSummaries.slice(-20)} />
                 <DataTable columns={Columns} data={feedbackSummaries} />
               </>
             )}

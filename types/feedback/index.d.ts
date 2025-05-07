@@ -31,3 +31,11 @@ interface FeedbackSummary {
   company: string;
   createdAt: string;
 }
+
+interface FeedbackScore {
+  attempt: string;
+  communication: number;
+  problemSolving: number;
+  culturalFit: number;
+  clarity: number;
+}
