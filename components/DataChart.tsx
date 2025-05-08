@@ -1,6 +1,6 @@
 "use client";
 
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+import { CartesianGrid, XAxis, YAxis, Area, AreaChart } from "recharts";
 
 import {
   Card,
@@ -51,7 +51,7 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
           config={chartConfig}
           className="min-h-[200px] max-h-[400px] w-full"
         >
-          <LineChart accessibilityLayer data={chartData}>
+          <AreaChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis hide dataKey="attempt" tickLine={false} axisLine={false} />
 
@@ -65,35 +65,43 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <ChartLegend content={<ChartLegendContent />} />
 
-            <Line
+            <Area
               dataKey="communication"
-              type="monotone"
+              type="natural"
               stroke="var(--color-chart-1)"
               strokeWidth={2}
-              dot={false}
+              dot={true}
+              fill="var(--color-chart-1)"
+              fillOpacity={0.2}
             />
-            <Line
+            <Area
               dataKey="problemSolving"
-              type="monotone"
+              type="natural"
               stroke="var(--color-chart-2)"
               strokeWidth={2}
-              dot={false}
+              dot={true}
+              fill="var(--color-chart-2)"
+              fillOpacity={0.2}
             />
-            <Line
+            <Area
               dataKey="culturalFit"
-              type="monotone"
+              type="natural"
               stroke="var(--color-chart-3)"
               strokeWidth={2}
-              dot={false}
+              dot={true}
+              fill="var(--color-chart-3)"
+              fillOpacity={0.2}
             />
-            <Line
+            <Area
               dataKey="clarity"
-              type="monotone"
+              type="natural"
               stroke="var(--color-chart-4)"
               strokeWidth={2}
-              dot={false}
+              dot={true}
+              fill="var(--color-chart-4)"
+              fillOpacity={0.2}
             />
-          </LineChart>
+          </AreaChart>
         </ChartContainer>
       </CardContent>
     </Card>
