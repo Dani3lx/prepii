@@ -61,6 +61,7 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
               tickMargin={8}
               tickFormatter={(value) => `${value}`}
               className="-translate-x-4"
+              domain={[0, 100]}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <ChartLegend content={<ChartLegendContent />} />
@@ -72,7 +73,7 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
               strokeWidth={2}
               dot={true}
               fill="var(--color-chart-1)"
-              fillOpacity={0.2}
+              fillOpacity={0.1}
             />
             <Area
               dataKey="problemSolving"
@@ -81,7 +82,7 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
               strokeWidth={2}
               dot={true}
               fill="var(--color-chart-2)"
-              fillOpacity={0.2}
+              fillOpacity={0.1}
             />
             <Area
               dataKey="culturalFit"
@@ -90,7 +91,7 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
               strokeWidth={2}
               dot={true}
               fill="var(--color-chart-3)"
-              fillOpacity={0.2}
+              fillOpacity={0.1}
             />
             <Area
               dataKey="clarity"
@@ -99,7 +100,7 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
               strokeWidth={2}
               dot={true}
               fill="var(--color-chart-4)"
-              fillOpacity={0.2}
+              fillOpacity={0.1}
             />
           </AreaChart>
         </ChartContainer>
