@@ -25,6 +25,8 @@ const Agent = ({ user, interview }: AgentProps) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [messages, setMessages] = useState<SavedMessage[]>([]);
+  const [joining, setJoining] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const latestMessage = messages[messages.length - 1]?.content;
 
@@ -32,8 +34,10 @@ const Agent = ({ user, interview }: AgentProps) => {
 
   // Initializes vapi
   useEffect(() => {
-    console.log(user, interview);
-    const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
+    const onCallStart = () => {
+      setCallStatus(CallStatus.ACTIVE);
+      setJoining(false);
+    };
     const onCallEnd = () => setCallStatus(CallStatus.FINISHED);
 
     const onMessage = (message: Message) => {
@@ -95,12 +99,14 @@ const Agent = ({ user, interview }: AgentProps) => {
   // Handles end of call
   useEffect(() => {
     if (callStatus === CallStatus.FINISHED) {
+      setLoading(true);
       handleGenerateFeedback(messages);
     }
   }, [messages, callStatus]);
 
   const handleCall = async () => {
     setCallStatus(CallStatus.CONNECTING);
+    setJoining(true);
 
     let formattedQuestions = "";
 
@@ -125,7 +131,7 @@ const Agent = ({ user, interview }: AgentProps) => {
   return (
     <>
       {callStatus === CallStatus.INACTIVE ? (
-        <div className="alt-background rounded-xl shadow-sm border p-8 md:p-10 mt-24 w-3/5 flex flex-col justify-center items-center gap-8 h-[66vh]">
+        <div className="alt-background rounded-xl p-8 container flex flex-col justify-center items-center gap-8 h-[66vh]">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-800">
             {interview?.role ? interview.role : "Behavioural"} Interview with{" "}
             {interview?.company ? interview.company : "Lily"}
@@ -141,11 +147,11 @@ const Agent = ({ user, interview }: AgentProps) => {
           </div>
 
           <Button className="w-1/3 p-6" onClick={handleCall}>
-            Join Call
+            {!joining ? "Join Call" : "Joining ..."}
           </Button>
         </div>
       ) : (
-        <div className="w-screen h-screen fixed top-0 left-0 bg-black flex flex-col justify-center items-center p-12">
+        <div className="w-screen h-screen fixed top-0 left-0 bg-black flex flex-col justify-center items-center p-12 z-50">
           <div
             className={cn(
               "w-full h-full bg-white/20 flex flex-col justify-center items-center rounded-3xl gap-4",
@@ -168,8 +174,12 @@ const Agent = ({ user, interview }: AgentProps) => {
             </div>
           </div>
 
-          <Button variant={"destructive"} onClick={handleDisconnect}>
-            End Call
+          <Button
+            variant={"destructive"}
+            onClick={handleDisconnect}
+            disabled={loading}
+          >
+            {!loading ? "End Call" : "Ending Call..."}
           </Button>
         </div>
       )}
