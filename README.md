@@ -2,7 +2,7 @@
 
 <p align="center">
   <strong>
-  <em>Prepii</em> is an all-in-one platform for mastering behavioral interviews, featuring live, AI-voiced mock interviews and intelligent feedback.<br>
+  <em>Prepii</em> is an all-in-one platform for mastering behavioral interviews, featuring live, AI-voiced mock interviews and intelligent feedback.
     It helps you practice, track progress, and build the confidence to ace interviews and land your dream job.
   </strong>
 </p>
@@ -15,7 +15,7 @@
 - **Progress tracking and analytics**: User dashboard featuring comprehensive charts and performance metrics for tracking progress over time.
 - **Secure authentication**: Uses Firebase Auth to provide reliable, secure sign-in and user management.
 
-## 🛠Tech Stack
+## Tech Stack
 
 - **Frontend:** Next.js, React, Tailwind CSS, Shadcn
 - **Backend:** Node.js, Next.js server action
