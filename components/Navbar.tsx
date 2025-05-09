@@ -18,8 +18,8 @@ const Navbar = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
     router.push("/sign-in");
   };
   return (
-    <nav className="fixed top-0 left-0 w-screen flex justify-center items-center border alt-background">
-      <div className="py-4 flex flex-row justify-between w-3/5">
+    <nav className="sticky top-0 left-0 w-screen flex justify-center items-center border alt-background backdrop-blur">
+      <div className="py-4 flex flex-row justify-between container mx-8">
         <Link href="/" className="font-bold text-2xl">
           Prepii
         </Link>

@@ -144,7 +144,7 @@ export const processFeedbackScores = async (
   const scores: FeedbackScore[] = [];
   feedbackSummaries.map((feedbackSummary, index) => {
     const feedbackScore: FeedbackScore = {
-      attempt: `Interview ${feedbackSummaries.length - index}`,
+      attempt: `Attempt ${feedbackSummaries.length - index}`,
       communication: feedbackSummary.categoryScores[0].score,
       problemSolving: feedbackSummary.categoryScores[1].score,
       culturalFit: feedbackSummary.categoryScores[2].score,

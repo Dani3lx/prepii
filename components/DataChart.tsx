@@ -39,11 +39,11 @@ const chartConfig = {
 
 export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Progress Overtime</CardTitle>
+    <Card className="col-span-3">
+      <CardHeader className="relative">
+        <CardTitle className="text-2xl">Progress Over Time</CardTitle>
         <CardDescription>
-          Scores for the last {chartData?.length} attempts
+          Your performance across the last {chartData?.length} attempts
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -52,7 +52,57 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
           className="min-h-[200px] max-h-[400px] w-full"
         >
           <AreaChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
+            <defs>
+              <linearGradient id="fill-1" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-chart-1)"
+                  stopOpacity={1.0}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-chart-1)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+              <linearGradient id="fill-2" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-chart-2)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-chart-2)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+              <linearGradient id="fill-3" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-chart-3)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-chart-3)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+              <linearGradient id="fill-4" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-chart-4)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-chart-4)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" />
             <XAxis hide dataKey="attempt" tickLine={false} axisLine={false} />
 
             <YAxis
@@ -60,7 +110,6 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
               axisLine={false}
               tickMargin={8}
               tickFormatter={(value) => `${value}`}
-              className="-translate-x-4"
               domain={[0, 100]}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
@@ -69,38 +118,34 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
             <Area
               dataKey="communication"
               type="natural"
+              fill="url(#fill-1)"
               stroke="var(--color-chart-1)"
-              strokeWidth={2}
-              dot={true}
-              fill="var(--color-chart-1)"
-              fillOpacity={0.1}
+              stackId="a"
+              fillOpacity={0.3}
             />
             <Area
               dataKey="problemSolving"
               type="natural"
+              fill="url(#fill-2)"
               stroke="var(--color-chart-2)"
-              strokeWidth={2}
-              dot={true}
-              fill="var(--color-chart-2)"
-              fillOpacity={0.1}
+              stackId="b"
+              fillOpacity={0.3}
             />
             <Area
               dataKey="culturalFit"
               type="natural"
+              fill="url(#fill-3)"
               stroke="var(--color-chart-3)"
-              strokeWidth={2}
-              dot={true}
-              fill="var(--color-chart-3)"
-              fillOpacity={0.1}
+              stackId="c"
+              fillOpacity={0.3}
             />
             <Area
               dataKey="clarity"
               type="natural"
+              fill="url(#fill-4)"
               stroke="var(--color-chart-4)"
-              strokeWidth={2}
-              dot={true}
-              fill="var(--color-chart-4)"
-              fillOpacity={0.1}
+              stackId="d"
+              fillOpacity={0.3}
             />
           </AreaChart>
         </ChartContainer>

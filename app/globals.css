@@ -45,7 +45,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.9821 0.0051 174.26);
+  --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -63,11 +63,11 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.65 0.3 210); /* Bright Sky Blue */
-  --chart-2: oklch(0.6 0.25 220); /* Soft Cerulean Blue */
-  --chart-3: oklch(0.55 0.18 230); /* Muted Ocean Blue */
-  --chart-4: oklch(0.45 0.28 250); /* Deep Indigo */
-  --chart-5: oklch(0.4 0.4 270); /* Bold Violet */
+  --chart-1: oklch(0.75 0.3 220); /* Clear Blue */
+  --chart-2: oklch(0.7 0.28 260); /* Vivid Purple */
+  --chart-3: oklch(0.65 0.26 300); /* Vibrant Magenta */
+  --chart-4: oklch(0.6 0.24 340); /* Deep Rose */
+  --chart-5: oklch(0.55 0.22 20); /* Warm Coral */
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -127,6 +127,6 @@
   }
 
   .alt-background {
-    @apply bg-white dark:bg-white/5;
+    @apply bg-white/80 dark:bg-white/5;
   }
 }

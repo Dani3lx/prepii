@@ -26,7 +26,9 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased overflow-x-hidden`}>
         <Navbar isAuthenticated={isUserAuthenticated} />
-        <main className="mt-18 w-screen flex justify-center">{children}</main>
+        <main className="flex-1 w-screen flex justify-center my-8">
+          {children}
+        </main>
         <Toaster />
       </body>
     </html>

@@ -20,27 +20,35 @@ export const Columns: ColumnDef<FeedbackSummary>[] = [
     accessorKey: "company",
     header: "Company",
     cell: ({ row }) => {
-      const company = row.getValue("company") || "N/A";
-      return company;
+      const company = String(row.getValue("company")) || "N/A";
+      return <p className="font-medium">{company}</p>;
     },
   },
   {
     accessorKey: "role",
     header: "Role",
     cell: ({ row }) => {
-      const company = row.getValue("role") || "N/A";
-      return company;
+      const role = String(row.getValue("role")) || "N/A";
+      return <p className="font-medium">{role}</p>;
     },
   },
   {
     accessorKey: "overallScore",
     header: "Overall",
+    cell: ({ row }) => {
+      const overall = String(row.getValue("overallScore")) || "N/A";
+      return <p className="font-medium">{overall}</p>;
+    },
   },
   {
     accessorKey: "createdAt",
     header: "Date",
     cell: ({ row }) => {
-      return dayjs(row.getValue("createdAt")).format("MMM D, YYYY");
+      return (
+        <p className="font-medium">
+          {dayjs(row.getValue("createdAt")).format("MMM D, YYYY")}
+        </p>
+      );
     },
   },
   {
