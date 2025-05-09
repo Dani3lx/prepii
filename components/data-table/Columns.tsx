@@ -21,7 +21,7 @@ export const Columns: ColumnDef<FeedbackSummary>[] = [
     header: "Company",
     cell: ({ row }) => {
       const company = String(row.getValue("company")) || "N/A";
-      return <p className="font-medium">{company}</p>;
+      return <p className="max-sm:text-xs sm:font-medium">{company}</p>;
     },
   },
   {
@@ -29,7 +29,7 @@ export const Columns: ColumnDef<FeedbackSummary>[] = [
     header: "Role",
     cell: ({ row }) => {
       const role = String(row.getValue("role")) || "N/A";
-      return <p className="font-medium">{role}</p>;
+      return <p className="max-sm:text-xs sm:font-medium">{role}</p>;
     },
   },
   {
@@ -37,7 +37,7 @@ export const Columns: ColumnDef<FeedbackSummary>[] = [
     header: "Overall",
     cell: ({ row }) => {
       const overall = String(row.getValue("overallScore")) || "N/A";
-      return <p className="font-medium">{overall}</p>;
+      return <p className="max-sm:text-xs sm:font-medium">{overall}</p>;
     },
   },
   {
@@ -45,7 +45,7 @@ export const Columns: ColumnDef<FeedbackSummary>[] = [
     header: "Date",
     cell: ({ row }) => {
       return (
-        <p className="font-medium">
+        <p className="max-sm:text-xs sm:font-medium">
           {dayjs(row.getValue("createdAt")).format("MMM D, YYYY")}
         </p>
       );
@@ -53,11 +53,12 @@ export const Columns: ColumnDef<FeedbackSummary>[] = [
   },
   {
     id: "actions",
+    header: "",
     cell: ({ row }) => {
       const feedback = row.original;
 
       return (
-        <div className="flex justify-end">
+        <div className="flex justify-end min-w-[30px]">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">

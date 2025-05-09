@@ -77,43 +77,49 @@ const page = async () => {
   ];
 
   return (
-    <div className="flex items-center container mx-8">
-      <div className="flex flex-col gap-8 w-full">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-4">
-          <div className="flex flex-col gap-3">
-            <h1 className="text-4xl font-bold tracking-tight">
-              Welcome back, {user?.name}
-            </h1>
-            <p className="text-muted-foreground">
-              Track your progress and prepare for your next interview.
-            </p>
-          </div>
-          <Button
-            asChild
-            className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
-          >
-            <Link href="/generate">
-              <Plus />
-              Start New Interview
-            </Link>
-          </Button>
+    <div className="flex flex-col gap-8 container px-8">
+      <div className="flex flex-col md:flex-row justify-between items-start gap-4">
+        <div className="flex flex-col gap-3">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
+            Welcome back, {user?.name}
+          </h1>
+          <p className="text-muted-foreground">
+            Track your progress and prepare for your next interview.
+          </p>
         </div>
+        <Button
+          asChild
+          className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
+        >
+          <Link href="/generate">
+            <Plus />
+            Start New Interview
+          </Link>
+        </Button>
+      </div>
 
-        <div className="space-y-4">
-          {!feedbackSummaries ? (
-            <div className="rounded-lg border bg-card p-6">
-              <div className="flex flex-col gap-2">
-                <h3 className="text-lg font-semibold">Getting Started</h3>
-                <p className="text-sm text-muted-foreground">
-                  Looks like you&apos;re just getting started! Kick off your
-                  first mock interview now and start building your journey
-                  toward success.
-                </p>
-              </div>
+      <div className="space-y-4">
+        {!feedbackSummaries ? (
+          <div className="rounded-lg border bg-card p-6">
+            <div className="flex flex-col gap-2">
+              <h3 className="text-lg font-semibold">Getting Started</h3>
+              <p className="text-sm text-muted-foreground">
+                Looks like you&apos;re just getting started! Kick off your first
+                mock interview now and start building your journey toward
+                success.
+              </p>
             </div>
-          ) : (
-            <>
-              <div className="grid gap-4 grid-cols-4">
+          </div>
+        ) : (
+          <>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl">Average Scores</CardTitle>
+                <CardDescription>
+                  Your average score across the 4 categories
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
                 {skillScores.map(({ name, score, icon: SkillIcon }) => (
                   <Card key={name}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0">
@@ -132,22 +138,22 @@ const page = async () => {
                     </CardContent>
                   </Card>
                 ))}
-              </div>
-              <DataChart chartData={feedbackScores} />
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-2xl">Past attempts</CardTitle>
-                  <CardDescription>
-                    Keep track of your previous interview attempts
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <DataTable columns={Columns} data={feedbackSummaries} />
-                </CardContent>
-              </Card>
-            </>
-          )}
-        </div>
+              </CardContent>
+            </Card>
+            <DataChart chartData={feedbackScores} />
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl">Past attempts</CardTitle>
+                <CardDescription>
+                  Keep track of your previous interview attempts
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <DataTable columns={Columns} data={feedbackSummaries} />
+              </CardContent>
+            </Card>
+          </>
+        )}
       </div>
     </div>
   );

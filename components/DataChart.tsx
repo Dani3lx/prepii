@@ -113,7 +113,10 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
               domain={[0, 100]}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <ChartLegend content={<ChartLegendContent />} />
+            <ChartLegend
+              className="max-sm:hidden"
+              content={<ChartLegendContent />}
+            />
 
             <Area
               dataKey="communication"
