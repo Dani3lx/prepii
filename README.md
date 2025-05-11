@@ -7,13 +7,15 @@
   </strong>
 </p>
 
-## Features
+## Defining the Problem
+Many job candidates struggle to perform well in behavioral interviews, not because they lack experience, but because they lack a clear way to prepare. Unlike technical interviews, which have established platforms offering structured, repeatable practice, behavioral prep is often ad hoc — limited to scattered blog posts, generic advice, or mock interviews with friends. This lack of a focused, feedback-driven system leaves candidates underprepared for a critical part of the hiring process.
 
-- **Personalized Interview Questions**: Utilizes Google Gemini to generate tailored interview questions based on job postings.
-- **Live AI-voiced mock interviews**: One-on-one live interview sessions with an AI powered by Vapi AI, delivering realistic voice and speech for a highly immersive experience.
-- **Smart feedback**: Generates actionable insights and personalized feedback after each session using Google Gemini.
-- **Progress tracking and analytics**: User dashboard featuring comprehensive charts and performance metrics for tracking progress over time.
-- **Secure authentication**: Uses Firebase Auth to provide reliable, secure sign-in and user management.
+## Features
+- **Personalized Interview Questions**: Generates tailored behavioral questions based on specific job postings using Google Gemini.
+- **Live AI-Voiced Mock Interviews**: Conduct realistic, voice-based mock interviews powered by Vapi AI for an immersive experience.
+- **Smart Feedback**: Receive actionable insights and personalized feedback after each session, powered by Google Gemini.
+- **Progress Tracking & Analytics**: Monitor your improvement over time with detailed charts and performance metrics.
+- **Secure Authentication**: Reliable user login and management via Firebase Auth.
 
 ## Tech Stack
 
