@@ -70,7 +70,7 @@ const page = async () => {
       icon: Handshake,
     },
     {
-      name: "Clarity and Structure",
+      name: "Clarity & Structure",
       score: Math.round(clarityScore / feedbackScores.length),
       icon: ListChecks,
     },
@@ -122,18 +122,20 @@ const page = async () => {
               <CardContent className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
                 {skillScores.map(({ name, score, icon: SkillIcon }) => (
                   <Card key={name}>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0">
+                    <CardHeader className="flex flex-row items-center lg:justify-between justify-center space-y-0 max-lg:px-2">
                       <CardTitle className="text-sm font-medium">
                         {name}
                       </CardTitle>
                       {SkillIcon ? (
-                        <SkillIcon className="h-4 w-4 text-muted-foreground" />
+                        <SkillIcon className="h-4 w-4 text-muted-foreground max-lg:hidden" />
                       ) : (
                         <MessageSquare className="h-4 w-4 text-muted-foreground" />
                       )}
                     </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold mb-2">{score}/100</div>
+                    <CardContent className="max-lg:px-4">
+                      <div className="text-2xl font-bold mb-2 max-lg:text-center">
+                        {score}/100
+                      </div>
                       <Progress value={score} />
                     </CardContent>
                   </Card>
