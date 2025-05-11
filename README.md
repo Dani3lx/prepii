@@ -1,5 +1,8 @@
 # Prepii
 
+![image](https://github.com/user-attachments/assets/c45e39a8-1546-4e48-8e12-57a68a763aaa)
+
+
 <p align="center">
   <strong>
   <em>Prepii</em> is an all-in-one platform for mastering behavioral interviews, featuring live, AI-voiced mock interviews and intelligent feedback.
@@ -16,6 +19,11 @@ Many job candidates struggle to perform well in behavioral interviews, not becau
 - **Smart Feedback**: Receive actionable insights and personalized feedback after each session, powered by Google Gemini.
 - **Progress Tracking & Analytics**: Monitor your improvement over time with detailed charts and performance metrics.
 - **Secure Authentication**: Reliable user login and management via Firebase Auth.
+
+## Challenges Faced
+- **Choosing the right tool** - Choosing between prebuilt AI services (like Vapi AI) and building custom solutions (e.g., Deepgram + GPT-4) required balancing cost, performance, integration complexity, and development speed.
+- **Optimizing AI response quality** - Designing prompts that consistently produce high-quality, relevant, and realistic questions and feedback was an iterative process involving extensive testing and fine-tuning.
+- **Data Privacy & Security**: Storing user sessions, feedback, and analytics required implementing secure authentication and careful handling of potentially sensitive data.
 
 ## Tech Stack
 
