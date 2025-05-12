@@ -71,7 +71,7 @@ const page = async ({ params }: RouteParams) => {
                     <span className="text-sm font-medium">{name}</span>
                     <span className="text-sm font-bold">{score}/100</span>
                   </div>
-                  <Progress value={70} className="h-2" />
+                  <Progress value={score} className="h-2" />
                 </div>
               </div>
             ))}

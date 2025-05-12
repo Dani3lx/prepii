@@ -99,7 +99,7 @@ const page = async () => {
       </div>
 
       <div className="space-y-4">
-        {!feedbackSummaries ? (
+        {!feedbackSummaries || feedbackSummaries.length <= 0 ? (
           <div className="rounded-lg border bg-card p-6">
             <div className="flex flex-col gap-2">
               <h3 className="text-lg font-semibold">Getting Started</h3>
