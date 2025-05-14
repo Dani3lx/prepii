@@ -42,7 +42,10 @@ const Agent = ({ user, interview }: AgentProps) => {
 
     const onMessage = (message: Message) => {
       if (message.type === "transcript" && message.transcriptType === "final") {
-        const newMessage = { role: message.role, content: message.transcript };
+        const newMessage = {
+          role: message.role,
+          content: message.transcript,
+        };
 
         setMessages((prev) => [...prev, newMessage]);
       }
@@ -51,8 +54,9 @@ const Agent = ({ user, interview }: AgentProps) => {
     const onSpeechStart = () => setIsSpeaking(true);
     const onSpeechEnd = () => setIsSpeaking(false);
 
-    const onError = (error: Error) => {
-      console.log("Error:", error);
+    const onError = (error: VapiError) => {
+      if (error.errorMsg == "Meeting has ended") return;
+      console.log("Error:", error.errorMsg);
       toast.error("Something went wrong during the call");
     };
 
