@@ -1,6 +1,12 @@
 import React from "react";
-import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Control, FieldValues, Path } from "react-hook-form";
+import {
+  FormField as RHFFormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 
@@ -19,14 +25,14 @@ const FormField = <T extends FieldValues>({
   placeholder,
   type = "text",
 }: FormFieldProps<T>) => (
-  <Controller
-    name={name}
+  <RHFFormField
     control={control}
+    name={name}
     render={({ field }) => (
       <FormItem className="grid gap-2">
         <FormLabel className="text-base">{label}</FormLabel>
         <FormControl>
-          {type == "textarea" ? (
+          {type === "textarea" ? (
             <Textarea
               {...field}
               placeholder={placeholder}
