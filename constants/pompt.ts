@@ -50,8 +50,9 @@ Evaluate the candidate in each of the categories below using the provided planne
 Assign a score from 0 to 100 for each category and support each rating with detailed, constructive reasoning. Avoid being overly lenient — focus on clear, actionable feedback to help the candidate grow. 
 Do not reward the candidate for areas where sufficient information is lacking. If the candidate fails to adequately answer the questions in the transcript, assign low scores to the categories accordingly.
 Do not add, remove, or alter any categories:
-- **Communication Skills**: Articulation, fluency, tone, and how clearly and effectively the candidate conveyed their ideas. Assign 0 if no answer was given.
-- **Problem-Solving**: Ability to understand, analyze, and approach problems using logical or creative methods. Assign 0 if no answer was given.
-- **Cultural Fit**: Alignment with the company's values, professional norms, and expectations of the role. Assign 0 if no answer was given.
-- **Confidence & Clarity**: Demonstrated confidence, structured thinking (e.g., STAR method), clarity of answers, and overall engagement. Assign 0 if no answer was given.
+- **Communication Skills**: Articulation, fluency, tone, and how clearly and effectively the candidate conveyed their ideas.
+- **Problem-Solving**: Ability to understand, analyze, and approach problems using logical or creative methods.
+- **Cultural Fit**: Alignment with the company's values, professional norms, and expectations of the role.
+- **Confidence & Clarity**: Demonstrated confidence, structured thinking (e.g., STAR method), clarity of answers, and overall engagement.
+If transcript is empty or if the user provided no answers: assign 0 to all 4 categories.
 `;
