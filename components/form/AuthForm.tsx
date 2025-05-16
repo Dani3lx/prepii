@@ -111,7 +111,7 @@ const AuthForm = ({ type }: { type: authType }) => {
   const isSignIn = type == "sign-in";
 
   return (
-    <div className="flex w-full items-center justify-center mt-80">
+    <div className="flex container px-8 fixed h-dvh top-0 items-center justify-center">
       <div className="w-full max-w-lg p-8 border-gray-200 border rounded-xl alt-background">
         <div className="flex flex-col gap-2 mb-6">
           <h1 className="text-2xl font-bold">
