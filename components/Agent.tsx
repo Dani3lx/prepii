@@ -81,16 +81,17 @@ const Agent = ({ user, interview }: AgentProps) => {
 
   const handleGenerateFeedback = async (messages: SavedMessage[]) => {
     try {
-      const { success, message } = await generateFeedback({
+      const { success, message, context } = await generateFeedback({
         interviewId: interview.id,
         userId: user.id,
         transcript: messages,
         questions: interview.questions,
       });
 
+      console.log(`/feedback/${context?.feedbackId}`);
       if (success) {
         toast.success(message);
-        router.push(`/interview/${interview.id}/feedback`);
+        router.push(`/feedback/${context?.feedbackId}`);
       } else {
         console.log("Error saving feedback");
         toast.error(message);

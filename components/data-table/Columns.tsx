@@ -69,9 +69,7 @@ export const Columns: ColumnDef<FeedbackSummary>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem>
-                <Link href={`/interview/${feedback.interviewId}/feedback`}>
-                  View Feedback
-                </Link>
+                <Link href={`/feedback/${feedback.id}`}>View Feedback</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

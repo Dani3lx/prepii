@@ -9,7 +9,7 @@ import { feedbackPrompt } from "@/constants/pompt";
 
 export const generateFeedback = async (
   props: GenerateFeedbackParams
-): Promise<ServerResponse> => {
+): Promise<FeedbackGenerationResponse> => {
   const { userId, transcript, interviewId, questions } = props;
   try {
     const formattedTranscript = transcript
@@ -32,7 +32,7 @@ export const generateFeedback = async (
         "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories",
     });
 
-    await db.collection("feedbacks").add({
+    const feedback = await db.collection("feedbacks").add({
       interviewId,
       userId,
       overallScore,
@@ -45,6 +45,7 @@ export const generateFeedback = async (
     return {
       success: true,
       message: "Feedback generated successfully!",
+      context: { feedbackId: feedback.id },
     };
   } catch (error) {
     console.log(error);
@@ -55,25 +56,16 @@ export const generateFeedback = async (
   }
 };
 
-export async function getFeedbackByInterviewId(
-  interviewId: string
-): Promise<Feedback | null> {
+export async function getFeedbackById(id: string): Promise<Feedback | null> {
   const user = await getCurrentUser();
 
-  const feedback = await db
-    .collection("feedbacks")
-    .where("userId", "==", user?.id)
-    .where("interviewId", "==", interviewId)
-    .limit(1)
-    .get();
+  const feedback = await db.collection("feedbacks").doc(id).get();
 
-  if (feedback.empty) return null;
-
-  const feedbackDoc = feedback.docs[0];
+  if (!feedback.exists || feedback.data()?.userId !== user?.id) return null;
 
   return {
-    id: feedbackDoc.id,
-    ...feedbackDoc.data(),
+    id: feedback.id,
+    ...feedback.data(),
   } as Feedback;
 }
 

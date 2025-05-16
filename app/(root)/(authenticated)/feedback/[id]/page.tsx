@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { getFeedbackByInterviewId } from "@/lib/actions/feedback.action";
+import { getFeedbackById } from "@/lib/actions/feedback.action";
 import { getInterviewById } from "@/lib/actions/interview.action";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -16,11 +16,12 @@ import React from "react";
 
 const page = async ({ params }: RouteParams) => {
   const { id } = await params;
-  const [interview, feedback] = await Promise.all([
-    getInterviewById(id),
-    getFeedbackByInterviewId(id),
-  ]);
-  if (!feedback || !interview) redirect("/");
+  const feedback = await getFeedbackById(id);
+
+  if (!feedback) redirect("/");
+
+  const interview = await getInterviewById(feedback.interviewId);
+  if (!interview) redirect("/");
   return (
     <div className="container px-8 flex flex-col gap-8">
       <div className="flex flex-col md:flex-row items-start justify-between gap-4">

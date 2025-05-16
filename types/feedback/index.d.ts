@@ -40,3 +40,9 @@ interface FeedbackScore {
   culturalFit: number;
   clarity: number;
 }
+
+type FeedbackContext = {
+  feedbackId: string;
+};
+
+type FeedbackGenerationResponse = ServerResponse<FeedbackContext>;
