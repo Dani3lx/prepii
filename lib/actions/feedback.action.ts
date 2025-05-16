@@ -1,19 +1,24 @@
 "use server";
 
-import { feedbackPrompt, feedbackSchema } from "@/constants";
+import { feedbackSchema } from "@/constants";
 import { db } from "@/firebase/admin";
 import { google } from "@ai-sdk/google";
 import { generateObject } from "ai";
 import { getCurrentUser } from "./auth.action";
+import { feedbackPrompt } from "@/constants/pompt";
 
 export const generateFeedback = async (
   props: GenerateFeedbackParams
 ): Promise<ServerResponse> => {
-  const { userId, transcript, interviewId } = props;
+  const { userId, transcript, interviewId, questions } = props;
   try {
     const formattedTranscript = transcript
       .map((sentence) => `- ${sentence.role}: ${sentence.content}\n`)
       .join("");
+
+    const formattedQuestions = questions
+      .map((question, index) => `Question ${index + 1}: ${question}\n`)
+      .join();
 
     const {
       object: { overallScore, categoryScores, strengths, areasForImprovement },
@@ -22,7 +27,7 @@ export const generateFeedback = async (
         structuredOutputs: false,
       }),
       schema: feedbackSchema,
-      prompt: feedbackPrompt(formattedTranscript),
+      prompt: feedbackPrompt(formattedTranscript, formattedQuestions),
       system:
         "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories",
     });

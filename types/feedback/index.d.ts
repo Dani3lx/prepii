@@ -1,6 +1,7 @@
 interface GenerateFeedbackParams {
   userId: string;
   transcript: { role: string; content: string }[];
+  questions: string[];
   interviewId: string;
 }
 

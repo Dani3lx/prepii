@@ -85,6 +85,7 @@ const Agent = ({ user, interview }: AgentProps) => {
         interviewId: interview.id,
         userId: user.id,
         transcript: messages,
+        questions: interview.questions,
       });
 
       if (success) {
