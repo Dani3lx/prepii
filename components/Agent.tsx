@@ -122,7 +122,7 @@ const Agent = ({ user, interview }: AgentProps) => {
         .join("\n");
     }
 
-    await vapi.start(interviewer, {
+    await vapi.start(interviewer(user.name), {
       variableValues: {
         questions: formattedQuestions,
       },
