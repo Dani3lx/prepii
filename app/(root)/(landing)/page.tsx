@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 
 export default function Home() {
   return (
-    <div className="container px-8 overflow-x-hidden mt-24 grid lg:grid-cols-7 gap-8">
+    <div className="container px-8 overflow-x-hidden mt-12 grid lg:grid-cols-7 gap-8">
       <div className="flex flex-col justify-center gap-8 lg:col-span-4">
         <h1 className="text-5xl lg:text-7xl font-bold">
           Ace Every Behavioral Interview with Confidence
