@@ -28,8 +28,6 @@ const Agent = ({ user, interview }: AgentProps) => {
   const [joining, setJoining] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const latestMessage = messages[messages.length - 1]?.content;
-
   const router = useRouter();
 
   // Initializes vapi
@@ -174,16 +172,11 @@ const Agent = ({ user, interview }: AgentProps) => {
             <h3 className="text-white">Lily Chen</h3>
           </div>
 
-          <div className="h-[100px] flex justify-center items-center">
-            <div className="text-white">
-              <p key={latestMessage}>{latestMessage}</p>
-            </div>
-          </div>
-
           <Button
             variant={"destructive"}
             onClick={handleDisconnect}
             disabled={loading}
+            className="mt-8"
           >
             {!loading ? "End Call" : "Ending Call..."}
           </Button>
