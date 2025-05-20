@@ -6,7 +6,7 @@ export const ONE_WEEK = 60 * 60 * 24 * 7 * 1000;
 
 export const interviewer = (candidate: string): CreateAssistantDTO => {
   return {
-    name: "Interviewer",
+    name: "Lily Chen",
     firstMessage: `Hey ${candidate}! Thank you for taking the time to speak with me today. I'm excited to learn more about you and your experience.`,
     transcriber: {
       provider: "deepgram",
@@ -36,6 +36,16 @@ export const interviewer = (candidate: string): CreateAssistantDTO => {
           type: "endCall",
         },
       ],
+    },
+    startSpeakingPlan: {
+      smartEndpointingPlan: {
+        provider: "livekit",
+        waitFunction: "4000 / (1 + exp(-10 * (x - 0.5)))",
+      },
+    },
+    stopSpeakingPlan: {
+      voiceSeconds: 0.5,
+      backoffSeconds: 3,
     },
   };
 };
