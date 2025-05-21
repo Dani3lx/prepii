@@ -27,6 +27,7 @@ const Agent = ({ user, interview }: AgentProps) => {
   const [messages, setMessages] = useState<SavedMessage[]>([]);
   const [joining, setJoining] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   const router = useRouter();
 
@@ -108,6 +109,11 @@ const Agent = ({ user, interview }: AgentProps) => {
     }
   }, [messages, callStatus]);
 
+  const handleMute = async () => {
+    vapi.setMuted(!isMuted);
+    setIsMuted((prev) => !prev);
+  };
+
   const handleCall = async () => {
     setCallStatus(CallStatus.CONNECTING);
     setJoining(true);
@@ -173,14 +179,19 @@ const Agent = ({ user, interview }: AgentProps) => {
             <h3 className="text-white">Lily Chen</h3>
           </div>
 
-          <Button
-            variant={"destructive"}
-            onClick={handleDisconnect}
-            disabled={loading}
-            className="mt-8"
-          >
-            {!loading ? "End Call" : "Ending Call..."}
-          </Button>
+          <div className="flex gap-4 mt-8">
+            <Button className="h-12" onClick={handleMute}>
+              {isMuted ? "Unmute" : "Mute"}
+            </Button>
+            <Button
+              variant={"destructive"}
+              onClick={handleDisconnect}
+              disabled={loading}
+              className="h-12"
+            >
+              {!loading ? "End Call" : "Ending Call..."}
+            </Button>
+          </div>
         </div>
       )}
     </>
