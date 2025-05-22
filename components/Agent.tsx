@@ -8,6 +8,7 @@ import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
 import { useRouter } from "next/navigation";
 import { generateFeedback } from "@/lib/actions/feedback.action";
+import { Mic, MicOff, Phone } from "lucide-react";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -180,16 +181,27 @@ const Agent = ({ user, interview }: AgentProps) => {
           </div>
 
           <div className="flex gap-4 mt-8">
-            <Button className="h-12" onClick={handleMute}>
-              {isMuted ? "Unmute" : "Mute"}
+            <Button
+              className={cn(
+                "h-14 w-14 rounded-full cursor-pointer",
+                isMuted && "bg-red-600 hover:bg-red-700"
+              )}
+              disabled={loading}
+              onClick={handleMute}
+            >
+              {isMuted ? (
+                <MicOff className="scale-130" />
+              ) : (
+                <Mic className="scale-130" />
+              )}
             </Button>
             <Button
               variant={"destructive"}
               onClick={handleDisconnect}
               disabled={loading}
-              className="h-12"
+              className="h-14 w-20 rounded-full cursor-pointer"
             >
-              {!loading ? "End Call" : "Ending Call..."}
+              {<Phone className="rotate-135 scale-130" />}
             </Button>
           </div>
         </div>

@@ -59,9 +59,9 @@ const FormField = <T extends FieldValues>({
                     onClick={() => setShowPassword((prev) => !prev)}
                   >
                     {showPassword ? (
-                      <EyeOff className="text-gray-400" />
+                      <EyeOff className="text-gray-400" strokeWidth={1.2} />
                     ) : (
-                      <Eye className="text-gray-400" />
+                      <Eye className="text-gray-400" strokeWidth={1.2} />
                     )}
                   </button>
                 )}
