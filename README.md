@@ -19,6 +19,7 @@ Many job candidates struggle to perform well in behavioral interviews, not becau
 - **Smart Feedback**: Receive actionable insights and personalized feedback after each session, powered by Google Gemini.
 - **Progress Tracking & Analytics**: Monitor your improvement over time with detailed charts and performance metrics.
 - **Secure Authentication**: Reliable user login and management via Firebase Auth.
+- **Optimized Performance with Caching**: Leveraging Redis to cache frequently accessed data for faster load times and reduced database usage.
 
 ## Challenges Faced
 - **Choosing the right tool** - Choosing between prebuilt AI services (like Vapi AI) and building custom solutions (e.g., Deepgram + GPT-4) required balancing cost, performance, integration complexity, and development speed.
@@ -28,7 +29,7 @@ Many job candidates struggle to perform well in behavioral interviews, not becau
 ## Tech Stack
 
 - **Frontend:** Next.js, React, Tailwind CSS, Shadcn
-- **Backend:** Node.js, Next.js server action
+- **Backend:** Node.js, Next.js server action, Redis Cache
 - **AI Services:** Google Gemini for question and feedback generation, Vapi AI for live voice call sessions
 - **Authentication**: Firebase Auth
 - **Database**: Firestore
@@ -74,6 +75,11 @@ NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=""
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=""
 NEXT_PUBLIC_FIREBASE_APP_ID=""
 NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=""
+
+NEXT_PUBLIC_REDIS_USERNAME=""
+NEXT_REDIS_PASSWORD=""
+NEXT_PUBLIC_REDIS_HOST=""
+NEXT_PUBLIC_REDIS_PORT=""
 
 NEXT_PUBLIC_VAPI_WEB_TOKEN=""
 ```
