@@ -1,11 +1,13 @@
 "use server";
 
-import { feedbackSchema } from "@/constants";
+import { feedbackSchema, ONE_WEEK } from "@/constants";
 import { db } from "@/firebase/admin";
 import { google } from "@ai-sdk/google";
 import { generateObject } from "ai";
 import { getCurrentUser } from "./auth.action";
 import { feedbackPrompt } from "@/constants/pompt";
+import { connectRedis, redisClient } from "../redis";
+import { getInterviewById } from "./interview.action";
 
 export const generateFeedback = async (
   props: GenerateFeedbackParams
@@ -32,6 +34,8 @@ export const generateFeedback = async (
         "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories",
     });
 
+    const createdAt = new Date().toISOString();
+
     const feedback = await db.collection("feedbacks").add({
       interviewId,
       userId,
@@ -39,9 +43,35 @@ export const generateFeedback = async (
       categoryScores,
       strengths,
       areasForImprovement,
-      createdAt: new Date().toISOString(),
+      createdAt: createdAt,
     });
 
+    try {
+      await connectRedis();
+      const cacheKey = `feedbackSummaries:user:${userId}`;
+      const cached =
+        ((await redisClient.json.get(cacheKey)) as FeedbackSummary[]) || null;
+      if (cached) {
+        const interview = await getInterviewById(interviewId);
+        if (interview) {
+          const summary: FeedbackSummary = {
+            id: feedback.id,
+            interviewId,
+            overallScore,
+            categoryScores,
+            role: interview.role,
+            company: interview.company,
+            createdAt: createdAt,
+          };
+
+          const updatedSummaries = [summary, ...cached];
+          await redisClient.json.set(cacheKey, "$", updatedSummaries);
+          await redisClient.expire(cacheKey, ONE_WEEK);
+        }
+      }
+    } catch (e) {
+      console.log("Failed to set Redis Cache for feedback: ", e);
+    }
     return {
       success: true,
       message: "Feedback generated successfully!",
@@ -91,6 +121,20 @@ export async function getFeedbacksByUserId(
 export async function getFeedbackSummariesByUserId(
   userId: string
 ): Promise<FeedbackSummary[]> {
+  const cacheKey = `feedbackSummaries:user:${userId}`;
+
+  // Return Redis cache if available
+  try {
+    await connectRedis();
+    const result =
+      ((await redisClient.json.get(cacheKey)) as FeedbackSummary[]) || null;
+    if (result) {
+      return result;
+    }
+  } catch (e) {
+    console.error("Redis get error:", e);
+  }
+
   const [interviewSnap, feedbackSnap] = await Promise.all([
     db.collection("interviews").where("userId", "==", userId).get(),
     db
@@ -131,6 +175,14 @@ export async function getFeedbackSummariesByUserId(
       } as FeedbackSummary;
     })
     .filter(Boolean) as FeedbackSummary[];
+
+  try {
+    await connectRedis();
+    await redisClient.json.set(cacheKey, "$", feedbackSummaries);
+    await redisClient.expire(cacheKey, ONE_WEEK);
+  } catch (error) {
+    console.error("Failed to set Redis cache for feedback summaries:", error);
+  }
 
   return feedbackSummaries;
 }

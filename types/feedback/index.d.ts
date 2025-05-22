@@ -19,7 +19,7 @@ interface Feedback {
   createdAt: string;
 }
 
-interface FeedbackSummary {
+type FeedbackSummary = {
   id: string;
   interviewId: string;
   overallScore: number;
@@ -31,7 +31,7 @@ interface FeedbackSummary {
   role: string;
   company: string;
   createdAt: string;
-}
+};
 
 interface FeedbackScore {
   attempt: string;
