@@ -111,6 +111,7 @@ export function DataChart({ chartData }: { chartData: FeedbackScore[] }) {
               tickMargin={8}
               tickFormatter={(value) => `${value}`}
               domain={[0, 100]}
+              allowDataOverflow={false}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <ChartLegend

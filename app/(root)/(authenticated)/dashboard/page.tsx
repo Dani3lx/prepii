@@ -32,7 +32,7 @@ const page = async () => {
   if (!user) redirect("/");
   const feedbackSummaries = await getFeedbackSummariesByUserId(user.id);
   const feedbackScores = await processFeedbackScores(
-    feedbackSummaries.slice(-20)
+    feedbackSummaries.slice(0, 20)
   );
 
   const {
