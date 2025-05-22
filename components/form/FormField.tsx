@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { Control, FieldValues, Path } from "react-hook-form";
 import {
   FormField as RHFFormField,
@@ -9,6 +10,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { Eye, EyeOff } from "lucide-react";
 
 interface FormFieldProps<T extends FieldValues> {
   control: Control<T>;
@@ -24,33 +26,53 @@ const FormField = <T extends FieldValues>({
   label,
   placeholder,
   type = "text",
-}: FormFieldProps<T>) => (
-  <RHFFormField
-    control={control}
-    name={name}
-    render={({ field }) => (
-      <FormItem className="grid gap-2">
-        <FormLabel className="text-base">{label}</FormLabel>
-        <FormControl>
-          {type === "textarea" ? (
-            <Textarea
-              {...field}
-              placeholder={placeholder}
-              className="resize-none min-h-80 bg-white"
-            />
-          ) : (
-            <Input
-              type={type}
-              placeholder={placeholder}
-              {...field}
-              className="bg-white"
-            />
-          )}
-        </FormControl>
-        <FormMessage />
-      </FormItem>
-    )}
-  />
-);
+}: FormFieldProps<T>) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const inputType = type === "password" && showPassword ? "text" : type;
+
+  return (
+    <RHFFormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className="grid gap-2">
+          <FormLabel className="text-base">{label}</FormLabel>
+          <FormControl>
+            {type === "textarea" ? (
+              <Textarea
+                {...field}
+                placeholder={placeholder}
+                className="resize-none min-h-80 pr-8"
+              />
+            ) : (
+              <div className="relative">
+                <Input
+                  type={inputType}
+                  placeholder={placeholder}
+                  {...field}
+                  className="pr-8"
+                />
+                {type === "password" && (
+                  <button
+                    className="absolute top-[6px] right-2"
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="text-gray-400" />
+                    ) : (
+                      <Eye className="text-gray-400" />
+                    )}
+                  </button>
+                )}
+              </div>
+            )}
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+};
 
 export default FormField;

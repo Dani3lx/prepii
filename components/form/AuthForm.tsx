@@ -19,12 +19,19 @@ import { useRouter } from "next/navigation";
 import { AuthError } from "firebase/auth";
 
 const authFormSchema = (type: authType) => {
-  return z.object({
-    name:
-      type === "sign-up" ? z.string().min(3).max(20) : z.string().optional(),
-    email: z.string().email(),
-    password: z.string().min(8),
-  });
+  return z
+    .object({
+      name:
+        type === "sign-up" ? z.string().min(3).max(20) : z.string().optional(),
+      email: z.string().email(),
+      password: z.string().min(8),
+      confirmPassword:
+        type === "sign-up" ? z.string().min(8) : z.string().optional(),
+    })
+    .refine(
+      (data) => type === "sign-in" || data.password === data.confirmPassword,
+      { message: "Passwords do not match", path: ["confirmPassword"] }
+    );
 };
 
 const AuthForm = ({ type }: { type: authType }) => {
@@ -35,6 +42,7 @@ const AuthForm = ({ type }: { type: authType }) => {
       name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
@@ -148,6 +156,15 @@ const AuthForm = ({ type }: { type: authType }) => {
               placeholder="Your password"
               type="password"
             />
+            {!isSignIn && (
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                label="Confirm Password"
+                placeholder="password"
+                type="password"
+              />
+            )}
             <Button type="submit" className="w-full">
               {isSignIn ? "Sign In" : "Sign Up"}
             </Button>

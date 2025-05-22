@@ -24,11 +24,13 @@ import {
   Plus,
 } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import React from "react";
 
 const page = async () => {
   const user = await getCurrentUser();
-  const feedbackSummaries = await getFeedbackSummariesByUserId(user!.id);
+  if (!user) redirect("/");
+  const feedbackSummaries = await getFeedbackSummariesByUserId(user.id);
   const feedbackScores = await processFeedbackScores(
     feedbackSummaries.slice(-20)
   );
