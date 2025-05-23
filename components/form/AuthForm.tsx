@@ -161,7 +161,7 @@ const AuthForm = ({ type }: { type: authType }) => {
                 control={form.control}
                 name="confirmPassword"
                 label="Confirm Password"
-                placeholder="password"
+                placeholder="Your password"
                 type="password"
               />
             )}
