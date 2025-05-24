@@ -31,9 +31,14 @@ const page = async ({ params }: RouteParams) => {
             Performance review and feedback summary
           </p>
         </div>
-        <Button asChild className="gap-2">
-          <Link href="/dashboard">Return to dashboard</Link>
-        </Button>
+        <div className="flex gap-4">
+          <Button asChild>
+            <Link href={`/interview/${interview.id}`}>Retake Interview</Link>
+          </Button>
+          <Button asChild>
+            <Link href="/dashboard">Return To Dashboard</Link>
+          </Button>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-5 gap-4">
