@@ -25,6 +25,7 @@ Many job candidates struggle to perform well in behavioral interviews, not becau
 - **Choosing the right tool** - Choosing between prebuilt AI services (like Vapi AI) and building custom solutions (e.g., Deepgram + GPT-4) required balancing cost, performance, integration complexity, and development speed.
 - **Optimizing AI response quality** - Designing prompts that consistently produce high-quality, relevant, and realistic questions and feedback was an iterative process involving extensive testing and fine-tuning.
 - **Data Privacy & Security**: Storing user sessions, feedback, and analytics required implementing secure authentication and careful handling of potentially sensitive data.
+- **Database performance optimization** – Improving access speed and reducing latency involved query optimization, indexing, and implementing caching strategies to minimize database load and ensure smooth performance under concurrent usage.
 
 ## Tech Stack
 
