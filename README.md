@@ -10,6 +10,14 @@
   </strong>
 </p>
 
+## Table of Contents
+- [Defining the Problem](#defining-the-problem)
+- [Features](#features)
+- [Challenges Faced](#challenges-faced)
+- [Tech Stack](#tech-stack)
+- [Future Improvements](#future-improvements)
+- [Getting Started](#getting-started)
+
 ## Defining the Problem
 Many job candidates struggle to perform well in behavioral interviews, not because they lack experience, but because they lack a clear way to prepare. Unlike technical interviews, which have established platforms offering structured, repeatable practice, behavioral prep is often ad hoc — limited to scattered blog posts, generic advice, or mock interviews with friends. This lack of a focused, feedback-driven system leaves candidates underprepared for a critical part of the hiring process.
 
