@@ -21,7 +21,9 @@ import { AuthError } from "firebase/auth";
 const authFormSchema = (type: authType) => {
   return z
     .object({
-      name:
+      firstname:
+        type === "sign-up" ? z.string().min(3).max(20) : z.string().optional(),
+      lastname:
         type === "sign-up" ? z.string().min(3).max(20) : z.string().optional(),
       email: z.string().email(),
       password: z.string().min(8),
@@ -39,7 +41,8 @@ const AuthForm = ({ type }: { type: authType }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      firstname: "",
+      lastname: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -74,7 +77,11 @@ const AuthForm = ({ type }: { type: authType }) => {
         toast.success(res.message);
         router.push("/dashboard");
       } else {
-        const { name, email, password } = values;
+        const { firstname, lastname, email, password } = values;
+        if (!firstname || !lastname) {
+          return;
+        }
+
         const userCredentials = await createUserWithEmailAndPassword(
           auth,
           email,
@@ -83,7 +90,8 @@ const AuthForm = ({ type }: { type: authType }) => {
 
         const res = await createUser({
           uid: userCredentials.user.uid,
-          name: name!,
+          firstname: firstname,
+          lastname: lastname,
           email: email,
         });
 
@@ -136,9 +144,18 @@ const AuthForm = ({ type }: { type: authType }) => {
             {!isSignIn && (
               <FormField
                 control={form.control}
-                name="name"
-                label="Name"
-                placeholder="Your name"
+                name="firstname"
+                label="First Name"
+                placeholder="Your first name"
+              />
+            )}
+
+            {!isSignIn && (
+              <FormField
+                control={form.control}
+                name="lastname"
+                label="Last Name"
+                placeholder="Your last name"
               />
             )}
 

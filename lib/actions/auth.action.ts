@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 export const createUser = async (
   param: CreateUserParams
 ): Promise<ServerResponse> => {
-  const { uid, name, email } = param;
+  const { uid, firstname, lastname, email } = param;
   const userRef = db.collection("users").doc(uid);
   try {
     const user = await userRef.get();
@@ -19,7 +19,8 @@ export const createUser = async (
     }
 
     await userRef.set({
-      name,
+      firstname,
+      lastname,
       email,
     });
 
