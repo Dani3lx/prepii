@@ -1,6 +1,7 @@
 interface CreateUserParams {
   uid: string;
-  name: string;
+  firstname: string;
+  lastname: string;
   email: string;
 }
 
