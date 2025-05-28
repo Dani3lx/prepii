@@ -7,6 +7,7 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
+  FormDescription,
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
@@ -17,6 +18,7 @@ interface FormFieldProps<T extends FieldValues> {
   name: Path<T>;
   label: string;
   placeholder?: string;
+  description?: string;
   type?: "text" | "email" | "password" | "file" | "textarea";
 }
 
@@ -26,6 +28,7 @@ const FormField = <T extends FieldValues>({
   label,
   placeholder,
   type = "text",
+  description,
 }: FormFieldProps<T>) => {
   const [showPassword, setShowPassword] = useState(false);
   const inputType = type === "password" && showPassword ? "text" : type;
@@ -50,11 +53,16 @@ const FormField = <T extends FieldValues>({
                   type={inputType}
                   placeholder={placeholder}
                   {...field}
-                  className="pr-8"
+                  className="pr-8 py-2"
                 />
+                {description && (
+                  <FormDescription className="mt-2">
+                    {description}
+                  </FormDescription>
+                )}
                 {type === "password" && (
                   <button
-                    className="absolute top-[6px] right-2"
+                    className="absolute top-[12px] right-2"
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
                   >

@@ -35,6 +35,8 @@ const page = async () => {
     feedbackSummaries.slice(0, 20)
   );
 
+  const fullname = `${user.firstname} ${user.lastname}`;
+
   const {
     communicationScore,
     problemSolvingScore,
@@ -83,7 +85,7 @@ const page = async () => {
       <div className="flex flex-col md:flex-row justify-between items-start gap-4">
         <div className="flex flex-col gap-3">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Welcome back, {user?.name}
+            Welcome back, {fullname}
           </h1>
           <p className="text-muted-foreground">
             Track your progress and prepare for your next interview.

@@ -22,9 +22,9 @@ const authFormSchema = (type: authType) => {
   return z
     .object({
       firstname:
-        type === "sign-up" ? z.string().min(3).max(20) : z.string().optional(),
+        type === "sign-up" ? z.string().min(1).max(20) : z.string().optional(),
       lastname:
-        type === "sign-up" ? z.string().min(3).max(20) : z.string().optional(),
+        type === "sign-up" ? z.string().min(1).max(20) : z.string().optional(),
       email: z.string().email(),
       password: z.string().min(8),
       confirmPassword:
@@ -172,13 +172,14 @@ const AuthForm = ({ type }: { type: authType }) => {
               label="Password"
               placeholder="Your password"
               type="password"
+              description="At least 8 characters"
             />
             {!isSignIn && (
               <FormField
                 control={form.control}
                 name="confirmPassword"
                 label="Confirm Password"
-                placeholder="Your password"
+                placeholder="Retype password"
                 type="password"
               />
             )}
