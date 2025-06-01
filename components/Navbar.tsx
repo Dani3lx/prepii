@@ -23,9 +23,24 @@ const Navbar = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
         <Link href="/" className="font-bold text-2xl">
           Prepii
         </Link>
-        <Button className="bg-white" variant="outline" onClick={handleOnClick}>
-          {isAuthenticated ? "Sign out" : "Sign In"}
-        </Button>
+        {isAuthenticated ? (
+          <Button
+            className="bg-white"
+            variant="outline"
+            onClick={handleOnClick}
+          >
+            Sign out
+          </Button>
+        ) : (
+          <div className="flex gap-4">
+            <Button variant="ghost" asChild>
+              <Link href={"/sign-in"}>Log in</Link>
+            </Button>
+            <Button onClick={handleOnClick} asChild>
+              <Link href={"/sign-up"}>Get Prepii free</Link>
+            </Button>
+          </div>
+        )}
       </div>
     </nav>
   );

@@ -5,17 +5,19 @@ import { Card } from "@/components/ui/card";
 
 export default function Home() {
   return (
-    <div className="container px-8 overflow-x-hidden mt-12 grid lg:grid-cols-7 gap-8">
-      <div className="flex flex-col justify-center gap-8 lg:col-span-4">
-        <h1 className="text-5xl lg:text-7xl font-bold">
+    <div className="container px-8 overflow-x-hidden mt-12 grid lg:grid-cols-6 gap-8">
+      <div className="flex flex-col justify-center gap-4 lg:col-span-3">
+        <h1 className="text-5xl lg:text-6xl font-bold">
           Ace Every Behavioral Interview with Confidence
         </h1>
-        <p className="text-xl lg:text-2xl text-gray-500">
+        <p className="text-xl font-medium">
           Prepii uses AI to help you prepare for behavioral interviews with live
           practice scenarios and smart personalized feedback.
         </p>
-        <Button asChild className="text-md p-8 w-fit">
-          <Link href="/sign-in">Get Started Free</Link>
+        <Button asChild className="text-md px-5 py-3">
+          <Link className="w-fit h-fit" href="/sign-in">
+            Get Started Free
+          </Link>
         </Button>
       </div>
       <Card className="lg:col-span-3 h-fit w-full">
