@@ -3,12 +3,19 @@
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
 import { db } from "@/firebase/admin";
-import { getCurrentUser } from "./auth.action";
+import { getCurrentUser } from "@/lib/data/auth.data";
 
 export const generateInterview = async (
   param: GenerateInterviewParams
 ): Promise<InterviewGenerationResponse> => {
-  const { role, company, description, userid } = param;
+  const { role, company, description } = param;
+  const user = await getCurrentUser();
+  if (!user) {
+    return {
+      success: false,
+      message: "User not authenticated",
+    };
+  }
 
   try {
     const { text: questions } = await generateText({
@@ -29,7 +36,7 @@ export const generateInterview = async (
       role: role,
       company: company,
       questions: JSON.parse(questions),
-      userId: userid,
+      userId: user.id,
       createdAt: new Date().toISOString(),
     };
 

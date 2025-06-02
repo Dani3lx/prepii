@@ -7,7 +7,6 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import FormField from "./FormField";
-import { getCurrentUser } from "@/lib/actions/auth.action";
 import { toast } from "sonner";
 import { generateInterview } from "@/lib/actions/interview.action";
 import { useRouter } from "next/navigation";
@@ -37,14 +36,12 @@ const GenerateForm = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
-    const user = await getCurrentUser();
     const { role, company, description } = values;
     try {
       const res = await generateInterview({
         role: role,
         company: company,
         description: description,
-        userid: user!.id,
       });
       if (!res.success) {
         toast.error(res.message);

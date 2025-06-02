@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { getCurrentUser } from "@/lib/actions/auth.action";
+import { getCurrentUser } from "@/lib/data/auth.data";
 import {
   getFeedbackSummariesByUserId,
   processFeedbackScores,

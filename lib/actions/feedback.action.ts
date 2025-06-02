@@ -4,7 +4,7 @@ import { feedbackSchema, ONE_WEEK } from "@/constants";
 import { db } from "@/firebase/admin";
 import { google } from "@ai-sdk/google";
 import { generateObject } from "ai";
-import { getCurrentUser } from "./auth.action";
+import { getCurrentUser } from "@/lib/data/auth.data";
 import { feedbackPrompt } from "@/constants/pompt";
 import { connectRedis, redisClient } from "../redis";
 import { getInterviewById } from "./interview.action";
