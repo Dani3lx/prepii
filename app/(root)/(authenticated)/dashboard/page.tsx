@@ -14,7 +14,7 @@ import { getCurrentUser } from "@/lib/data/auth.data";
 import {
   getFeedbackSummariesByUserId,
   processFeedbackScores,
-} from "@/lib/actions/feedback.action";
+} from "@/lib/data/feedback.data";
 import {
   Brain,
   Handshake,

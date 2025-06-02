@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { getFeedbackById } from "@/lib/actions/feedback.action";
+import { getFeedbackById } from "@/lib/data/feedback.data";
 import { getInterviewById } from "@/lib/actions/interview.action";
 import Link from "next/link";
 import { redirect } from "next/navigation";
