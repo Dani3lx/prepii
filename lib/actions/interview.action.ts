@@ -5,22 +5,20 @@ import { google } from "@ai-sdk/google";
 import { db } from "@/firebase/admin";
 import { getCurrentUser } from "@/lib/data/auth.data";
 
-export const generateInterview = async (
-  param: GenerateInterviewParams
-): Promise<InterviewGenerationResponse> => {
-  const { role, company, description } = param;
-  const user = await getCurrentUser();
-  if (!user) {
-    return {
-      success: false,
-      message: "User not authenticated",
-    };
-  }
+export const generateInterview = async (param: GenerateInterviewParams): Promise<InterviewGenerationResponse> => {
+    const { role, company, description } = param;
+    const user = await getCurrentUser();
+    if (!user) {
+        return {
+            success: false,
+            message: "User not authenticated",
+        };
+    }
 
-  try {
-    const { text: questions } = await generateText({
-      model: google("gemini-2.0-flash-001"),
-      prompt: `Prepare questions for a job interview.
+    try {
+        const { text: questions } = await generateText({
+            model: google("gemini-2.5-flash"),
+            prompt: `Prepare questions for a job interview.
             The job role is ${role}.
             The company is ${company}.
             The job description is ${description}.
@@ -30,70 +28,62 @@ export const generateInterview = async (
             Return the questions formatted like this:
             ["Question 1", "Question 2", "Question 3"]
         `,
-    });
+        });
 
-    const interview = {
-      role: role,
-      company: company,
-      questions: JSON.parse(questions),
-      userId: user.id,
-      createdAt: new Date().toISOString(),
-    };
+        const interview = {
+            role: role,
+            company: company,
+            questions: JSON.parse(questions),
+            userId: user.id,
+            createdAt: new Date().toISOString(),
+        };
 
-    const interviewRecord = await db.collection("interviews").add(interview);
+        const interviewRecord = await db.collection("interviews").add(interview);
 
-    return {
-      success: true,
-      message: "Interview has been successfully created!",
-      context: { interviewId: interviewRecord.id },
-    };
-  } catch (error) {
-    console.log("Something went wrong: ", error);
-    return {
-      success: false,
-      message: "Something went wrong, please try again.",
-    };
-  }
+        return {
+            success: true,
+            message: "Interview has been successfully created!",
+            context: { interviewId: interviewRecord.id },
+        };
+    } catch (error) {
+        console.log("Something went wrong: ", error);
+        return {
+            success: false,
+            message: "Something went wrong, please try again.",
+        };
+    }
 };
 
-export const getInterviewById = async (
-  id: string
-): Promise<Interview | null> => {
-  try {
-    const user = await getCurrentUser();
-    const interviewRecord = await db.collection("interviews").doc(id).get();
+export const getInterviewById = async (id: string): Promise<Interview | null> => {
+    try {
+        const user = await getCurrentUser();
+        const interviewRecord = await db.collection("interviews").doc(id).get();
 
-    if (!interviewRecord.exists || interviewRecord.data()?.userId != user?.id) {
-      return null;
+        if (!interviewRecord.exists || interviewRecord.data()?.userId != user?.id) {
+            return null;
+        }
+
+        const interview = {
+            id: interviewRecord.id,
+            ...interviewRecord.data(),
+        } as Interview;
+
+        return interview;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+};
+
+export const getInterviewsByUserId = async (userId: string): Promise<Interview[]> => {
+    const interviews = await db.collection("interviews").where("userId", "==", userId).orderBy("createdAt", "desc").get();
+
+    if (interviews.empty) {
+        return [];
     }
 
-    const interview = {
-      id: interviewRecord.id,
-      ...interviewRecord.data(),
-    } as Interview;
-
-    return interview;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
-
-export const getInterviewsByUserId = async (
-  userId: string
-): Promise<Interview[]> => {
-  const interviews = await db
-    .collection("interviews")
-    .where("userId", "==", userId)
-    .orderBy("createdAt", "desc")
-    .get();
-
-  if (interviews.empty) {
-    return [];
-  }
-
-  return interviews.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  })) as Interview[];
+    return interviews.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    })) as Interview[];
 };

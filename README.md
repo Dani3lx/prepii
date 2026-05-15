@@ -2,7 +2,6 @@
 
 ![image](https://github.com/user-attachments/assets/c45e39a8-1546-4e48-8e12-57a68a763aaa)
 
-
 <p align="center">
   <strong>
   <em>Prepii</em> is an all-in-one platform for mastering behavioral interviews, featuring live, AI-voiced mock interviews and intelligent feedback.
@@ -11,6 +10,7 @@
 </p>
 
 ## Table of Contents
+
 - [Defining the Problem](#defining-the-problem)
 - [Features](#features)
 - [Challenges Faced](#challenges-faced)
@@ -19,9 +19,11 @@
 - [Getting Started](#getting-started)
 
 ## Defining the Problem
+
 Many job candidates struggle to perform well in behavioral interviews, not because they lack experience, but because they lack a clear way to prepare. Unlike technical interviews, which have established platforms offering structured, repeatable practice, behavioral prep is often ad hoc — limited to scattered blog posts, generic advice, or mock interviews with friends. This lack of a focused, feedback-driven system leaves candidates underprepared for a critical part of the hiring process.
 
 ## Features
+
 - **Personalized Interview Questions**: Generates tailored behavioral questions based on specific job postings using Google Gemini.
 - **Live AI-Voiced Mock Interviews**: Conduct realistic, voice-based mock interviews powered by Vapi AI for an immersive experience.
 - **Smart Feedback**: Receive actionable insights and personalized feedback after each session, powered by Google Gemini.
@@ -30,6 +32,7 @@ Many job candidates struggle to perform well in behavioral interviews, not becau
 - **Optimized Performance with Caching**: Leveraging Redis to cache frequently accessed data for faster load times and reduced database usage.
 
 ## Challenges Faced
+
 - **Choosing the right tool** - Choosing between prebuilt AI services (like Vapi AI) and building custom solutions (e.g., Deepgram + GPT-4) required balancing cost, performance, integration complexity, and development speed.
 - **Optimizing AI response quality** - Designing prompts that consistently produce high-quality, relevant, and realistic questions and feedback was an iterative process involving extensive testing and fine-tuning.
 - **Data Privacy & Security**: Storing user sessions, feedback, and analytics required implementing secure authentication and careful handling of potentially sensitive data.
@@ -45,6 +48,7 @@ Many job candidates struggle to perform well in behavioral interviews, not becau
 - **Deployment:** Vercel
 
 ## Future Improvements
+
 - Resume/linkedIn scanner to automatically extract information on user for a more personalized interview experience
 - Extract and autofill the interview generation form automatically from the job posting
 - Fine-tune models and improve prompts for enhanced AI responses
@@ -52,25 +56,31 @@ Many job candidates struggle to perform well in behavioral interviews, not becau
 ## Getting Started
 
 First, clone the project:
+
 ```bash
 git clone https://github.com/Dani3lx/prepii.git
 ```
 
 Go to project repository:
+
 ```bash
 cd prepii
 ```
 
 Install dependencies:
+
 ```bash
 npm i
 ```
 
 Set up environment variables using the structure specified in the example:
+
 ```bash
 cp .env.example .env
 ```
+
 or follow the following structure:
+
 ```bash
 FIREBASE_PROJECT_ID=""
 FIREBASE_PRIVATE_KEY=""
@@ -85,15 +95,16 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=""
 NEXT_PUBLIC_FIREBASE_APP_ID=""
 NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=""
 
-NEXT_PUBLIC_REDIS_USERNAME=""
-NEXT_REDIS_PASSWORD=""
-NEXT_PUBLIC_REDIS_HOST=""
-NEXT_PUBLIC_REDIS_PORT=""
+REDIS_USERNAME=""
+REDIS_PASSWORD=""
+REDIS_HOST=""
+REDIS_PORT=""
 
 NEXT_PUBLIC_VAPI_WEB_TOKEN=""
 ```
 
 Lastly, run the server:
+
 ```bash
 npm run dev
 # or
